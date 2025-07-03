@@ -1,0 +1,5 @@
+math==unknown
+matplotlib==3.9.2
+openseespy.opensees==3.7.1
+numpy==1.26.4
+opsvis==1.0.1
