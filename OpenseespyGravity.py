@@ -126,16 +126,16 @@ ops.element('elasticBeamColumn', 3, 3, 4, Bb*Hb, Ec, (Bb*Hb**3)/12, 2)
 # Φορτία
 
 #  a parameter for the axial load
-# P =  180  # 10% of axial capacity of columns
-# Υπολογισμός 10% αξονικής αντοχής ανά υποστύλωμα                      # <<<
-Ag = Bc * Hc                                                           # <<<
-nBars = 3 + 2 + 3                                                      # <<<
-As_tot = nBars * AsC                                                   # <<<
-fpc = abs(fcC)                                                         # <<<
-P0_col = 0.85 * fpc * (Ag - As_tot) + fy * As_tot                      # <<<
-P = 0.10 * P0_col                                                      # <<<
 
-
+# Υπολογισμός 10% μέγιστης αξονικής αντοχής ανά υποστύλωμα με βάσει τον Ευροκώδικα 2   # >>>
+Ag = Bc * Hc                                                                           # >>>
+fcd = 0.85 * fcC / 1.5                                                                 # >>>
+fyd = fy / 1.15                                                                        # >>>
+nBars = 3 + 2 + 3                                                                      # >>>
+As_tot = nBars * AsC                                                                   # >>>
+Nrd = fcd*Ag + fyd*As_tot                                                              # >>>                                         
+P = 0.10 * Nrd                                                                         # >>>
+print("Αξονικό φορτίο:", P, "N")
 
 
 
@@ -152,10 +152,10 @@ ops.load(4, 0.0, -P, 0.0)
 
 
 # Οπτικοποίηση μοντέλου
-opsv.plot_model(node_labels=1, element_labels=1, fig_wi_he=(20, 14))   # <<<
-plt.title('Μοντέλο Πλαισίου')                                          # <<<
-plt.grid(False)                                                        # <<<
-plt.show()                                                             # <<<
+opsv.plot_model(node_labels=1, element_labels=1, fig_wi_he=(20, 15))   # >>>
+plt.title('Μοντέλο Πλαισίου')                                          # >>>
+plt.grid(False)                                                        # >>>
+plt.show()                                                             # >>>
 
 
 # ------------------------------
@@ -206,8 +206,8 @@ u3 = ops.nodeDisp(3, 2)
 u4 = ops.nodeDisp(4, 2)
 
 print("==========================")
-print("Node 3 displacement in Y direction:", u3)
-print("Node 4 displacement in Y direction:", u4)
+print("Node 3 displacement in Y direction:", u3,'mm')
+print("Node 4 displacement in Y direction:", u4,'mm')
 
 print("==========================")
 
